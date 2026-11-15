@@ -1,0 +1,85 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/course_card
+
+    One course tile, shared by the homepage "your learning" strip and the
+    dashboard continue panel so the two cannot drift apart.
+
+    Context variables required for this template:
+    * url - Course URL
+    * name - Course display name
+    * category - Category name, may be empty
+    * hascategory - Whether to print the category line
+    * imageurl - Image URL, always present: the course's featured image when it
+                 has one, otherwise the generated pattern
+    * hasprogress - Whether completion progress is meaningful for this course
+    * progress - Integer 0-100
+    * progresslabel - Localised "45% complete", used as the accessible name
+    * progresscaption - Localised "Progress", the visible caption
+    * percentshort - Localised "45%"
+    * cta - Action label
+    * arrowicon - Pre-rendered SVG
+
+    Example context (json):
+    {
+        "url": "/course/view.php?id=2",
+        "name": "Designing Learning Experiences",
+        "category": "Teaching Practice",
+        "hascategory": true,
+        "imageurl": "/theme/image.php/nadine/core/1/generated",
+        "hasprogress": true,
+        "progress": 45,
+        "progresslabel": "45% complete",
+        "progresscaption": "Progress",
+        "percentshort": "45%",
+        "cta": "Resume",
+        "arrowicon": "<svg class=\"nl-icon\"></svg>"
+    }
+}}
+<article class="nl-card" data-nl-reveal="zoom">
+    <a class="nl-card__link" href="{{{ url }}}">
+        <span class="nl-card__media">
+            <img class="nl-card__image" src="{{{ imageurl }}}" alt="" loading="lazy" decoding="async">
+            {{#hascategory}}<span class="nl-card__eyebrow">{{category}}</span>{{/hascategory}}
+        </span>
+        <span class="nl-card__body">
+            <span class="nl-card__title">{{name}}</span>
+            {{#hasprogress}}
+                <span class="nl-card__progress">
+                    {{! The ring carries the value for assistive tech; the figure
+                        inside it and the caption beside it are a visual
+                        restatement of the same number. }}
+                    <span class="nl-card__ring" role="progressbar" aria-valuenow="{{progress}}"
+                        aria-valuemin="0" aria-valuemax="100" aria-label="{{progresslabel}}"
+                        style="--nl-progress: {{progress}};">
+                        <span class="nl-card__ring-value">{{progress}}<small>%</small></span>
+                    </span>
+                    <span class="nl-card__progress-copy" aria-hidden="true">
+                        <span class="nl-card__progress-label">{{progresscaption}}</span>
+                    </span>
+                </span>
+            {{/hasprogress}}
+            <span class="nl-card__foot">
+                <span class="nl-card__cta">
+                    {{cta}}
+                    <span class="nl-card__arrow">{{{ arrowicon }}}</span>
+                </span>
+            </span>
+        </span>
+    </a>
+</article>

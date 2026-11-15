@@ -1,0 +1,79 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core/report_link_page
+
+    Overridden by theme_nadine to render the course reports as a card grid
+    instead of a bare list of links.
+
+    The `reports` context is added by
+    theme_nadine\output\core_renderer::render_from_template(). It is absent
+    when the template is rendered from anywhere else, and the core list is kept
+    as the fallback so nothing is lost.
+
+    Context variables required for this template:
+    * reports - list of {url, name, summary, icon, tone}
+    * arrow - chevron glyph shown at the trailing edge of every card
+    * node - the raw coursereports navigation node, used by the fallback
+
+    Example context (json):
+    {
+        "reports": [
+            {
+                "url": "/report/log/index.php?id=2",
+                "name": "Logs",
+                "summary": "Every view, submission and grade, filtered by person, activity or date.",
+                "icon": "<svg class=\"nl-icon\" aria-hidden=\"true\"></svg>",
+                "tone": "log"
+            }
+        ],
+        "arrow": "<svg class=\"nl-icon\" aria-hidden=\"true\"></svg>"
+    }
+}}
+{{#hasreports}}
+<div class="nl-reports">
+    <ul class="nl-reports__grid" role="list">
+        {{#reports}}
+        <li class="nl-reports__item">
+            <a class="nl-report-card nl-report-card--{{tone}}" href="{{{url}}}">
+                <span class="nl-report-card__icon" aria-hidden="true">{{{icon}}}</span>
+                <span class="nl-report-card__body">
+                    <span class="nl-report-card__title">{{name}}</span>
+                    {{#summary}}
+                    <span class="nl-report-card__text">{{summary}}</span>
+                    {{/summary}}
+                </span>
+                <span class="nl-report-card__chevron" aria-hidden="true">{{{arrow}}}</span>
+            </a>
+        </li>
+        {{/reports}}
+    </ul>
+</div>
+{{/hasreports}}
+{{^hasreports}}
+<div class="container-fluid">
+    <div>
+        <ul class="list-unstyled ms-0">
+            {{#node.children}}
+                {{#display}}
+                    <li><a href="{{{action}}}">{{text}}</a></li>
+                {{/display}}
+            {{/node.children}}
+        </ul>
+    </div>
+</div>
+{{/hasreports}}

@@ -1,0 +1,98 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/footer
+
+    Site footer. Every link points at a real Moodle page or the official
+    Moodle documentation. The social row is built from the addresses entered
+    in the theme settings and disappears when none are set.
+
+    Context variables required for this template:
+    * brand - Site identity, already rendered
+    * tagline - Short line under the identity
+    * about - Short paragraph about the site
+    * hassocial - True when at least one social address is set
+    * sociallabel - Accessible name for the social list
+    * social - List of {url, label, arialabel, icon}
+    * columns - List of {title, links}
+    * copyright - Copyright line
+    * moodleurl - moodle.org
+    * moodlelabel - Link label for moodle.org
+    * totoplabel - Back to top label
+    * totopicon - Back to top glyph
+
+    Example context (json):
+    {
+        "brand": "<a class=\"nl-brand\" href=\"#\">Nadine Academy</a>",
+        "tagline": "A learning platform designed around people.",
+        "about": "<p>Clear courses and calm feedback.</p>",
+        "hassocial": true,
+        "sociallabel": "Social media",
+        "social": [{"url": "https://example.com", "label": "LinkedIn", "arialabel": "Follow us on LinkedIn", "icon": "<svg></svg>"}],
+        "columns": [{"title": "Explore", "links": [{"url": "/", "label": "Home"}]}],
+        "copyright": "© 2026 Nadine Academy.",
+        "moodleurl": "https://moodle.org/",
+        "moodlelabel": "Built with Moodle",
+        "totoplabel": "Back to top",
+        "totopicon": "<svg></svg>"
+    }
+}}
+<footer class="nl-footer" role="contentinfo">
+    <div class="nl-footer__inner">
+        <div class="nl-footer__brand">
+            {{{brand}}}
+            <p class="nl-footer__tagline">{{tagline}}</p>
+            <div class="nl-footer__about">{{{about}}}</div>
+
+            {{#hassocial}}
+                <ul class="nl-footer__social" aria-label="{{sociallabel}}">
+                    {{#social}}
+                        <li>
+                            <a class="nl-footer__social-link"
+                               href="{{url}}"
+                               title="{{label}}"
+                               aria-label="{{arialabel}}"
+                               target="_blank"
+                               rel="noopener noreferrer me">{{{icon}}}</a>
+                        </li>
+                    {{/social}}
+                </ul>
+            {{/hassocial}}
+        </div>
+
+        {{#columns}}
+            <nav class="nl-footer__col" aria-label="{{title}}">
+                <h2 class="nl-footer__heading">{{title}}</h2>
+                <ul>
+                    {{#links}}
+                        <li>
+                            <a href="{{url}}"{{#external}} rel="noopener noreferrer"{{/external}}>{{label}}</a>
+                        </li>
+                    {{/links}}
+                </ul>
+            </nav>
+        {{/columns}}
+    </div>
+
+    <div class="nl-footer__bottom">
+        <p class="nl-footer__copyright">{{copyright}}</p>
+        <div class="nl-footer__meta">
+            <a class="nl-footer__totop" href="#page-wrapper">{{totoplabel}}{{{totopicon}}}</a>
+            <a class="nl-footer__moodle" href="{{moodleurl}}" rel="noopener noreferrer">{{moodlelabel}}</a>
+        </div>
+    </div>
+</footer>

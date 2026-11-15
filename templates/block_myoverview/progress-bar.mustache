@@ -1,0 +1,49 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/block_myoverview/progress-bar
+
+    The dashboard's course progress as a measure rather than a sentence.
+
+    Core prints "75% complete" as muted text, which reads as metadata and
+    cannot be compared between cards at a glance. This renders the same value
+    as a small ring beside a figure and caption. The ring carries the
+    progressbar role and the core "Course progress" label; the visible figure
+    and caption are hidden from assistive tech so the value is not read twice.
+
+    The ring is deliberately the same shape as the one in the course hero, so
+    a learner meets one progress language across the site.
+
+    Context variables required for this template:
+    * progress - Integer 0-100
+
+    Example context (json):
+    {
+        "progress": 50
+    }
+}}
+<div class="nl-mprogress">
+    <div class="nl-mprogress__ring" role="progressbar" aria-valuenow="{{progress}}"
+        aria-valuemin="0" aria-valuemax="100"
+        aria-label="{{#str}}courseprogresscaption, theme_nadine{{/str}}"
+        style="--nl-progress: {{progress}};">
+        <span class="nl-mprogress__ring-value">{{progress}}<small>%</small></span>
+    </div>
+    <div class="nl-mprogress__copy" aria-hidden="true">
+        <span class="nl-mprogress__label">{{#str}}courseprogresscaption, theme_nadine{{/str}}</span>
+    </div>
+</div>

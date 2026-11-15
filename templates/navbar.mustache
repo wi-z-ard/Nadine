@@ -1,0 +1,73 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/navbar
+
+    Top navigation. The structure and every interactive control come from
+    Boost: primary navigation, page heading menu, search, language menu,
+    colour mode menu, edit switch, plugin output and the user menu.
+}}
+<nav class="navbar fixed-top nl-navbar navbar-expand" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+    <div class="container-fluid nl-navbar__inner">
+        <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
+            <span class="navbar-toggler-icon"></span>
+            <span class="visually-hidden">{{#str}}sidepanel, core{{/str}}</span>
+        </button>
+
+        {{{ output.nadine_brand }}}
+
+        {{#primarymoremenu}}
+            <div class="primary-navigation">
+                {{> core/primarymoremenu }}
+            </div>
+        {{/primarymoremenu}}
+
+        {{# output.page_heading_menu}}
+            <ul class="navbar-nav d-none d-md-flex my-1 px-1">
+                <!-- page_heading_menu -->
+                {{{ output.page_heading_menu }}}
+            </ul>
+        {{/output.page_heading_menu}}
+
+        <div id="usernavigation" class="navbar-nav ms-auto h-100">
+            {{# output.search_box }}
+                {{{ output.search_box }}}
+            {{/output.search_box}}
+            {{#langmenu}}
+                {{> theme_boost/language_menu }}
+                <div class="divider border-start h-75 align-self-center mx-1"></div>
+            {{/langmenu}}
+            {{# output.colour_mode_menu }}
+                {{{ . }}}
+                <div class="divider border-start h-75 align-self-center mx-1"></div>
+            {{/ output.colour_mode_menu }}
+            {{{ output.edit_switch }}}
+            {{# output.navbar_plugin_output }}
+                {{{ . }}}
+                <div class="divider border-start h-75 align-self-center mx-1"></div>
+            {{/output.navbar_plugin_output}}
+            {{{ output.nadine_auth_actions }}}
+            {{#usermenu}}
+                <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
+                    {{> core/user_menu }}
+                </div>
+            {{/usermenu}}
+        </div>
+    </div>
+</nav>
+
+{{> theme_boost/primary-drawer-mobile }}

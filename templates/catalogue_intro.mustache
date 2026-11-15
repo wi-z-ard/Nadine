@@ -1,0 +1,48 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/catalogue_intro
+
+    Course discovery band shown above Moodle's own course listing. The listing,
+    categories, filters and pagination below it are still rendered by Moodle.
+}}
+<section class="nl-catalogue" aria-labelledby="nl-catalogue-title">
+    <div class="nl-catalogue__copy">
+        <p class="nl-eyebrow">{{eyebrow}}</p>
+        <h2 id="nl-catalogue-title" class="nl-catalogue__title">{{title}}</h2>
+        <div class="nl-catalogue__intro">{{{intro}}}</div>
+    </div>
+
+    {{#search}}{{> theme_nadine/search_form }}{{/search}}
+
+    <div class="nl-catalogue__footer">
+        {{#hascategories}}
+            <div class="nl-catalogue__categories">
+                <span class="nl-catalogue__label">{{categorieslabel}}</span>
+                <ul class="nl-chips">
+                    {{#categories}}
+                        <li><a class="nl-chip" href="{{url}}">{{name}}</a></li>
+                    {{/categories}}
+                </ul>
+            </div>
+        {{/hascategories}}
+        <a class="nl-textlink" href="{{allcoursesurl}}">
+            {{allcourseslabel}}
+            {{{ arrowicon }}}
+        </a>
+    </div>
+</section>

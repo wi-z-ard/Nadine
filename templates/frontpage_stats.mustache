@@ -1,0 +1,43 @@
+{{!
+    This file is part of Moodle - http://moodle.org
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/frontpage_stats
+
+    Homepage counters. Every figure is read from the database.
+
+    Example context (json):
+    {
+        "stats": [
+            {"value": "12", "rawvalue": 12, "label": "Courses", "icon": "fa-graduation-cap", "accent": "#2563eb"}
+        ]
+    }
+}}
+<section class="nl-stats" aria-label="{{label}}" data-nl-reveal="up">
+    <dl class="nl-stats__inner">
+        {{#stats}}
+            <div class="nl-stat" style="--nl-stat-accent: {{accent}};">
+                <span class="nl-stat__icon" aria-hidden="true">
+                    {{{ icon }}}
+                </span>
+                <div class="nl-stat__body">
+                    <dt class="nl-stat__label">{{label}}</dt>
+                    <dd class="nl-stat__value" data-nl-counter="{{rawvalue}}">{{value}}</dd>
+                </div>
+            </div>
+        {{/stats}}
+    </dl>
+</section>

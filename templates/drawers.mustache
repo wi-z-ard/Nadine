@@ -1,0 +1,236 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/drawers
+
+    Nadine drawer layout.
+
+    This is the Boost drawer layout with three additions:
+    * a skip link and a main landmark,
+    * the optional homepage hero, dashboard welcome and catalogue intro,
+    * the theme footer.
+
+    All drawers, block regions, course index and editing controls keep the
+    behaviour provided by Boost.
+
+    Example context (json):
+    {
+        "sitename": "Moodle",
+        "output": {
+            "doctype": "<!DOCTYPE html>",
+            "page_title": "Test page",
+            "favicon": "favicon.ico",
+            "main_content": "<h1>Headings make html validators happier</h1>"
+        },
+        "bodyattributes": "",
+        "sidepreblocks": "<h2>Blocks html goes here</h2>",
+        "hasblocks": true,
+        "courseindexopen": true,
+        "navdraweropen": false,
+        "blockdraweropen": true,
+        "regionmainsettingsmenu": "",
+        "hasregionmainsettingsmenu": false,
+        "addblockbutton": ""
+    }
+}}
+{{> theme_boost/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+<a class="nl-skip-link" href="#region-main">{{#str}}skipcontent, theme_nadine{{/str}}</a>
+<div id="page-wrapper" class="d-print-block">
+
+    {{{ output.standard_top_of_body_html }}}
+
+    {{{ output.nadine_primary_rail }}}
+
+    {{> theme_nadine/navbar }}
+    {{#courseindex}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-courseindex{{/id}}
+            {{$drawerheading}}{{> theme_boost/courseindexdrawerheading}}{{/drawerheading}}
+            {{$drawercontrols}}{{> theme_boost/courseindexdrawercontrols}}{{/drawercontrols}}
+            {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                {{{courseindex}}}
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-index{{/drawerpreferencename}}
+            {{$drawerstate}}show-drawer-left{{/drawerstate}}
+            {{$tooltipplacement}}right{{/tooltipplacement}}
+            {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
+            {{$closebuttonicon}}
+                <span class="nl-drawer-icon">{{{ drawerlefticon }}}</span>
+            {{/closebuttonicon}}
+        {{/ theme_boost/drawer}}
+    {{/courseindex}}
+    {{#hasblocks}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-blocks{{/id}}
+            {{$drawerclasses}}drawer drawer-right{{#blockdraweropen}} show{{/blockdraweropen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                <div class="nl-rail__head nl-rail__head--panel">
+                    <p class="nl-rail__title">{{#str}}blocks{{/str}}</p>
+                    <label class="nl-rail__collapse" for="nl-rail-toggle" title="{{#str}}collapserail, theme_nadine{{/str}}">
+                        <span class="visually-hidden">{{#str}}collapserail, theme_nadine{{/str}}</span>
+                        <span class="nl-rail__collapse-icon" aria-hidden="true">{{{ panelcollapseicon }}}</span>
+                    </label>
+                </div>
+                <div class="d-print-none">
+                    {{{ addblockbutton }}}
+                    {{{ sidepreblocks }}}
+                </div>
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-block{{/drawerpreferencename}}
+            {{$forceopen}}{{#forceblockdraweropen}}1{{/forceblockdraweropen}}{{/forceopen}}
+            {{$drawerstate}}show-drawer-right{{/drawerstate}}
+            {{$tooltipplacement}}left{{/tooltipplacement}}
+            {{$drawercloseonresize}}1{{/drawercloseonresize}}
+            {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
+            {{$closebuttonicon}}
+                <span class="nl-drawer-icon">{{{ drawerrighticon }}}</span>
+            {{/closebuttonicon}}
+        {{/ theme_boost/drawer}}
+    {{/hasblocks}}
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container{{#output.nadine_hero}} nl-has-hero{{/output.nadine_hero}}">
+        <div id="topofscroll" class="main-inner">
+            <div class="drawer-toggles d-flex">
+                {{#courseindex}}
+                    <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
+                        <button
+                            class="btn btn-icon icon-size-3"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-courseindex"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            aria-controls="theme_boost-drawers-courseindex"
+                            aria-expanded="{{#courseindexopen}}true{{/courseindexopen}}{{^courseindexopen}}false{{/courseindexopen}}"
+                            title="{{#str}}opendrawerindex, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
+                            <span class="nl-drawer-icon">{{{ drawerlefticon }}}</span>
+                        </button>
+                    </div>
+                {{/courseindex}}
+                {{#hasblocks}}
+                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
+                        <button
+                            class="btn btn-icon icon-size-3"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-blocks"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerblocks, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                            <span class="nl-drawer-icon">{{{ drawerrighticon }}}</span>
+                        </button>
+                    </div>
+                {{/hasblocks}}
+            </div>
+            {{#hasblocks}}
+                <input type="checkbox" id="nl-rail-toggle" class="nl-rail-toggle-input">
+                <label class="nl-rail-toggle nl-rail-toggle--right" for="nl-rail-toggle" title="{{#str}}toggleblockrail, theme_nadine{{/str}}">
+                    <span class="visually-hidden">{{#str}}toggleblockrail, theme_nadine{{/str}}</span>
+                    <span class="nl-rail-toggle-icon" aria-hidden="true">{{{ railtoggleicon }}}</span>
+                </label>
+            {{/hasblocks}}
+            <input type="checkbox" id="nl-left-rail-toggle" class="nl-left-rail-toggle-input"{{#navrailcollapsed}} checked{{/navrailcollapsed}}>
+            <label class="nl-rail-toggle nl-rail-toggle--left" for="nl-left-rail-toggle" title="{{#str}}togglenavrail, theme_nadine{{/str}}">
+                <span class="visually-hidden">{{#str}}togglenavrail, theme_nadine{{/str}}</span>
+                <span class="nl-rail-toggle-icon" aria-hidden="true">{{{ railtoggleicon }}}</span>
+            </label>
+            {{#output.nadine_course_hero}}
+                {{{ output.nadine_course_hero }}}
+            {{/output.nadine_course_hero}}
+            {{^output.nadine_course_hero}}
+                {{#output.nadine_hero}}
+                    {{{ output.nadine_hero }}}
+                {{/output.nadine_hero}}
+                {{^output.nadine_hero}}
+                    {{#output.nadine_profile_meta}}
+                        <div class="nl-profile-head">
+                            {{{ output.full_header }}}
+                            {{{ output.nadine_profile_meta }}}
+                        </div>
+                    {{/output.nadine_profile_meta}}
+                    {{^output.nadine_profile_meta}}
+                        {{{ output.full_header }}}
+                    {{/output.nadine_profile_meta}}
+                {{/output.nadine_hero}}
+            {{/output.nadine_course_hero}}
+            {{{ output.nadine_frontpage_intro }}}
+            {{{ output.nadine_frontpage_continue }}}
+            {{#output.nadine_dashboard_welcome}}
+                {{{ output.nadine_dashboard_welcome }}}
+            {{/output.nadine_dashboard_welcome}}
+            {{#output.nadine_catalogue_intro}}
+                {{{ output.nadine_catalogue_intro }}}
+            {{/output.nadine_catalogue_intro}}
+            {{#secondarymoremenu}}
+                <div class="secondary-navigation d-print-none">
+                    {{> core/secondarymoremenu}}
+                </div>
+            {{/secondarymoremenu}}
+            <div id="page-content" class="pb-3 d-print-block">
+                <div id="region-main-box">
+                    {{#hasregionmainsettingsmenu}}
+                    <div id="region-main-settings-menu" class="d-print-none">
+                        <div> {{{ regionmainsettingsmenu }}} </div>
+                    </div>
+                    {{/hasregionmainsettingsmenu}}
+                    <main id="region-main" tabindex="-1">
+
+                        {{#hasregionmainsettingsmenu}}
+                            <div class="region_main_settings_menu_proxy"></div>
+                        {{/hasregionmainsettingsmenu}}
+                        {{{ output.course_content_header }}}
+                        {{#headercontent}}
+                            {{> core/activity_header }}
+                        {{/headercontent}}
+                        {{#overflow}}
+                            <div class="container-fluid tertiary-navigation">
+                                <div class="navitem">
+                                    {{> core/tertiary_navigation_selector}}
+                                </div>
+                            </div>
+                        {{/overflow}}
+                        {{{ output.main_content }}}
+                        {{{ output.activity_navigation }}}
+                        {{{ output.course_content_footer }}}
+
+                    </main>
+                </div>
+            </div>
+            {{{ output.nadine_frontpage_outro }}}
+        </div>
+    </div>
+    {{{ output.nadine_footer }}}
+    {{{ output.standard_after_main_region_html }}}
+    {{{ output.standard_end_of_body_html }}}
+</div>
+
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+    Drawer.init();
+    M.util.js_complete('theme_boost/loader');
+});
+{{/js}}

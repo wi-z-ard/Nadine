@@ -1,0 +1,9 @@
+# Build artefacts
+*.zip
+node_modules/
+vendor/
+
+# Editor and OS noise
+.DS_Store
+.idea/
+.vscode/

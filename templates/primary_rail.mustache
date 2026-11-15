@@ -1,0 +1,73 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/primary_rail
+
+    The docked left navigation rail. Shown from 1200px up; below that the
+    stock Boost primary drawer is used instead.
+
+    Context variables required for this template:
+    * brand - pre-rendered site brand
+    * collapseicon - pre-rendered SVG for the collapse control
+    * groups - list of {title, items[]}
+    * footer - list of quick links shown above the user card
+    * user - {name, url, picture}
+
+    Example context (json):
+    {
+        "brand": "<a class=\"nl-brand\" href=\"/\">Nadine Academy</a>",
+        "collapseicon": "<svg class=\"nl-icon\"></svg>",
+        "groups": [{"title": "", "items": [{"url": "/my/", "label": "Dashboard", "icon": "<svg class=\"nl-icon\"></svg>", "color": "#0d9488", "active": true}]}],
+        "footer": [{"url": "/admin/search.php", "label": "Site administration", "icon": "<svg class=\"nl-icon\"></svg>", "color": "#475569"}],
+        "user": {"name": "Admin User", "url": "/user/profile.php?id=2", "picture": "<img class=\"userpicture\">"}
+    }
+}}
+<aside id="nl-primary-rail" class="nl-rail nl-rail--nav" aria-label="{{#str}}primarynavigation, theme_nadine{{/str}}">
+    <div class="nl-rail__head">
+        {{{ brand }}}
+        <label class="nl-rail__collapse" for="nl-left-rail-toggle" title="{{#str}}collapserail, theme_nadine{{/str}}">
+            <span class="visually-hidden">{{#str}}collapserail, theme_nadine{{/str}}</span>
+            <span class="nl-rail__collapse-icon" aria-hidden="true">{{{ collapseicon }}}</span>
+        </label>
+    </div>
+    <nav class="nl-rail__body">
+        {{#groups}}
+            <div class="nl-rail__group">
+                {{#title}}<p class="nl-rail__group-title">{{.}}</p>{{/title}}
+                {{#items}}
+                    <a class="nl-rail__link{{#active}} is-active{{/active}}" href="{{{ url }}}"
+                        style="--nl-rail-accent: {{ color }};" title="{{ label }}"{{#active}} aria-current="page"{{/active}}>
+                        <span class="nl-rail__glyph">{{{ icon }}}</span>
+                        <span class="nl-rail__label">{{ label }}</span>
+                    </a>
+                {{/items}}
+            </div>
+        {{/groups}}
+    </nav>
+    <div class="nl-rail__foot">
+        {{#footer}}
+            <a class="nl-rail__link nl-rail__link--quiet" href="{{{ url }}}" style="--nl-rail-accent: {{ color }};" title="{{ label }}">
+                <span class="nl-rail__glyph">{{{ icon }}}</span>
+                <span class="nl-rail__label">{{ label }}</span>
+            </a>
+        {{/footer}}
+        <a class="nl-rail__user" href="{{{ user.url }}}" title="{{ user.name }}">
+            {{{ user.picture }}}
+            <span class="nl-rail__user-name">{{ user.name }}</span>
+        </a>
+    </div>
+</aside>

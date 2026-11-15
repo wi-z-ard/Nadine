@@ -1,0 +1,82 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/login
+
+    Login page layout.
+
+    Moodle's split-screen login layout is kept, including every authentication
+    option and validation message. Nadine adds a minimal top bar with the
+    brand and the real Moodle language selector, and its own footer.
+
+    Context variables required for this template:
+    * loggedinheading - Page heading, only set when a signed-in user opens the
+      login page and core therefore prints no heading of its own
+}}
+{{> theme_boost/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+<a class="nl-skip-link" href="#region-main">{{#str}}skipcontent, theme_nadine{{/str}}</a>
+
+<div id="page-wrapper" class="nl-login-page">
+
+    {{{ output.standard_top_of_body_html }}}
+
+    <header class="nl-login-topbar">
+        <div class="nl-login-topbar__inner">
+            {{{ output.nadine_brand }}}
+            <div class="nl-login-topbar__actions">
+                {{{ output.lang_menu }}}
+                <a class="nl-quiet-link" href="{{{ config.homeurl }}}">
+                    {{{ backicon }}}
+                    {{#str}}backtosite, theme_nadine{{/str}}
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div id="page" class="mt-0">
+        {{#loggedinheading}}<h1 class="visually-hidden">{{loggedinheading}}</h1>{{/loggedinheading}}
+        {{> core/login_layout }}
+    </div>
+
+    {{{ output.nadine_footer }}}
+    {{{ output.standard_after_main_region_html }}}
+    {{{ output.standard_end_of_body_html }}}
+</div>
+
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader'], function() {
+    M.util.js_complete('theme_boost/loader');
+});
+{{/js}}
+{{#js}}
+// Put the caret in the first field on desktop. On a phone the keyboard would
+// cover the form before it has been read, and on a failed attempt the message
+// above the form is what needs reading.
+if (window.matchMedia('(min-width: 992px)').matches &&
+        !document.querySelector('.loginerrors, .alert-danger')) {
+    var nlUsername = document.getElementById('username');
+    if (nlUsername && !nlUsername.value) {
+        nlUsername.focus();
+    }
+}
+{{/js}}

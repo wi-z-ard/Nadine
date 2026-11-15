@@ -1,0 +1,50 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/login_panel
+
+    Branding panel for the split login layout. Unlike the core default it
+    contains no invented user or site statistics: it uses the site name and
+    copy configured by the administrator.
+}}
+<div class="nl-login-panel">
+    {{#hasimage}}
+        <div class="nl-login-panel__art">
+            <img class="nl-login-panel__image" src="{{imageurl}}" alt="{{imagealt}}">
+        </div>
+    {{/hasimage}}
+    <div class="nl-login-panel__content">
+        {{{brand}}}
+        <div class="nl-login-panel__copy">
+            <p class="nl-eyebrow">{{eyebrow}}</p>
+            <h2 class="nl-login-panel__title">{{title}}</h2>
+            <div class="nl-login-panel__intro">{{{intro}}}</div>
+            <ul class="nl-login-panel__points">
+                {{#points}}
+                    <li>
+                        <span class="nl-login-panel__icon">{{{ icon }}}</span>
+                        <span class="nl-login-panel__point-copy">
+                            <strong>{{title}}</strong>
+                            <span>{{text}}</span>
+                        </span>
+                    </li>
+                {{/points}}
+            </ul>
+        </div>
+        <p class="nl-login-panel__note">{{note}}</p>
+    </div>
+</div>

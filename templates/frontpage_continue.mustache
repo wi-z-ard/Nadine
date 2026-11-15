@@ -1,0 +1,47 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/frontpage_continue
+
+    The signed-in learner's own courses, shown under the homepage counters.
+    Core prints every available course further down the page, so this is
+    deliberately personal rather than a second catalogue.
+
+    Context variables required for this template:
+    * eyebrow, title - Section heading
+    * courses - List of course card contexts
+    * singlecard - True when only one card is shown
+    * allcoursesurl, allcourseslabel - Link to My courses
+    * arrowicon - Pre-rendered SVG
+}}
+<section class="nl-courses" aria-labelledby="nl-courses-title">
+    <div class="nl-courses__head" data-nl-reveal="up">
+        <div class="nl-courses__heading">
+            <p class="nl-eyebrow">{{eyebrow}}</p>
+            <h2 id="nl-courses-title" class="nl-courses__title">{{title}}</h2>
+        </div>
+        <a class="nl-textlink nl-courses__all" href="{{{ allcoursesurl }}}">
+            {{allcourseslabel}}
+            {{{ arrowicon }}}
+        </a>
+    </div>
+    <div class="nl-cards{{#singlecard}} nl-cards--single{{/singlecard}}">
+        {{#courses}}
+            {{> theme_nadine/course_card }}
+        {{/courses}}
+    </div>
+</section>

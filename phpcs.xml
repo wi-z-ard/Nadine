@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="theme_nadine">
+    <description>Moodle code style for the Nadine theme.</description>
+
+    <file>.</file>
+
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+
+    <rule ref="moodle"/>
+</ruleset>

@@ -1,0 +1,84 @@
+{{!
+    This file is part of Moodle - http://moodle.org
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_nadine/search_form
+
+    Course search field with a live results panel. The form submits normally
+    without JavaScript; the panel is built by js/search.js on top of it.
+
+    Example context (json):
+    {
+        "id": "nl-hero-search",
+        "compact": false,
+        "action": "/course/search.php",
+        "endpoint": "/theme/nadine/ajax/search.php",
+        "sesskey": "abc123",
+        "label": "Search courses",
+        "placeholder": "Search courses by name or topic",
+        "viewall": "View all results",
+        "clearlabel": "Clear search",
+        "strnone": "No courses match \"{$a}\".",
+        "strcount": "{$a} matching courses",
+        "strerror": "Search is unavailable right now. Please try again.",
+        "strloading": "Searching..."
+    }
+}}
+<form class="nl-search{{#compact}} nl-search--compact{{/compact}}"
+      action="{{action}}"
+      method="get"
+      role="search"
+      data-nl-search
+      data-nl-endpoint="{{endpoint}}"
+      data-nl-sesskey="{{sesskey}}"
+      data-nl-minchars="2"
+      data-nl-str-none="{{strnone}}"
+      data-nl-str-count="{{strcount}}"
+      data-nl-str-error="{{strerror}}"
+      data-nl-str-loading="{{strloading}}">
+    <label class="visually-hidden" for="{{id}}">{{label}}</label>
+    <div class="nl-search__field">
+        <span class="nl-search__icon">{{{ searchicon }}}</span>
+        <input
+            id="{{id}}"
+            class="nl-search__input"
+            type="search"
+            name="search"
+            placeholder="{{placeholder}}"
+            autocomplete="off"
+            spellcheck="false"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="false"
+            aria-controls="{{id}}-results"
+            data-nl-search-input
+        >
+        <span class="nl-search__spinner" data-nl-search-spinner hidden aria-hidden="true"></span>
+        <button
+            class="nl-search__clear"
+            type="button"
+            data-nl-search-clear
+            aria-label="{{clearlabel}}"
+            hidden
+        >{{{ clearicon }}}</button>
+        <button class="btn btn-primary nl-search__submit" type="submit">{{label}}</button>
+    </div>
+    <div class="nl-search__panel" data-nl-search-panel hidden>
+        <p class="nl-search__status" role="status" aria-live="polite" data-nl-search-status></p>
+        <ul class="nl-search__results" id="{{id}}-results" role="listbox" aria-label="{{label}}" data-nl-search-results></ul>
+        <a class="nl-search__all" href="{{action}}" data-nl-search-all hidden>{{viewall}}</a>
+    </div>
+</form>
